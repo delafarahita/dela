@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   item:{
     marginLeft:100,
-    marginTop:35,
+    marginTop:30,
     fontSize:16,
     fontFamily:'roboto',
     color:'black'
