@@ -1,7 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList} from 'react-native'
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const App = () => {
+export default function App ({navigation}) {
   return (
     <View style={styles.container}>
       <Image 
@@ -22,7 +24,7 @@ const App = () => {
       <FlatList
       renderItem={({item}) =>
       <View>        
-      <Text style={styles.item}>{item.key}</Text>
+      <Text style={styles.item} onPress={()=> navigation.navigate('dua',item.key)}>{item.key}</Text>
       <Text style={styles.harga}>{item.harga}</Text>
       <Image source={item.src} style={styles.img1} />
       </View>
@@ -52,7 +54,7 @@ const App = () => {
   )
 }
 
-export default App
+
 
 const styles = StyleSheet.create({
   container:{
@@ -84,6 +86,8 @@ const styles = StyleSheet.create({
   },
   icon:{
     position:'absolute',
+    width:25,
+    height:25,
     marginLeft:20,
     marginTop:18,
     color:'black'
