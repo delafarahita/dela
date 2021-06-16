@@ -9,9 +9,11 @@ export default function App ({navigation}) {
       <FlatList
       renderItem={({item}) =>
       <View>        
-      <Text style={styles.item} onPress={()=> navigation.navigate('dua',item.key)}>{item.key}</Text>
-      <Text style={styles.harga}>{item.harga}</Text>
-      <Image source={item.src} style={styles.img1} />
+      <Text style={styles.item} onPress={()=> navigation.navigate('dua',item.id)}>{item.id}</Text>
+      <Text style={styles.email}>{item.email}</Text>
+      <Text style={styles.first_name}>{item.first_name}</Text>
+      <Text style={styles.last_name}>{item.last_name}</Text>
+      <Image source={item.avatar} style={styles.img1} />
       </View>
       }
         data={[
