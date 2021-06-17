@@ -13,7 +13,7 @@ export default function App ({navigation}) {
       <Text style={styles.email}>{item.email}</Text>
       <Text style={styles.first_name}>{item.first_name}</Text>
       <Text style={styles.last_name}>{item.last_name}</Text>
-      <Image source={item.avatar} style={styles.img1} />
+      <Image source={{uri : item.avatar}} style={styles.img1} />
       </View>
       }
         data={[
