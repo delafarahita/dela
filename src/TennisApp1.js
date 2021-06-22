@@ -1,153 +1,35 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList} from 'react-native'
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
 
-export default function App ({navigation}) {
+export default App = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  console.log(data);
+
+  useEffect(() => {
+    fetch('https://reqres.in/api/users?page=2')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <FlatList
-      renderItem={({item}) =>
-      <View>        
-      <Text style={styles.item} onPress={()=> navigation.navigate('dua',item.id)}>{item.id}</Text>
-      <Text style={styles.email}>{item.email}</Text>
-      <Text style={styles.first_name}>{item.first_name}</Text>
-      <Text style={styles.last_name}>{item.last_name}</Text>
-      <Image source={{uri : item.avatar}} style={styles.img1} />
-      </View>
-      }
-        data={[
-        {
-            id: "7",
-            email: "michael.lawson@reqres.in",
-            first_name: "Michael",
-            last_name: "Lawson",
-            avatar: "https://reqres.in/img/faces/7-image.jpg"
-        },
-        {
-            id: "8",
-            email: "lindsay.ferguson@reqres.in",
-            first_name: "Lindsay",
-            last_name: "Ferguson",
-            avatar: "https://reqres.in/img/faces/8-image.jpg"
-        },
-        {
-            id: "9",
-            email: "tobias.funke@reqres.in",
-            first_name: "Tobias",
-            last_name: "Funke",
-            avatar: "https://reqres.in/img/faces/9-image.jpg"
-        },
-        {
-            id: "10",
-            email: "byron.fields@reqres.in",
-            first_name: "Byron",
-            last_name: "Fields",
-            avatar: "https://reqres.in/img/faces/10-image.jpg"
-        },
-        {
-            id: "11",
-            email: "george.edwards@reqres.in",
-            first_name: "George",
-            last_name: "Edwards",
-            avatar: "https://reqres.in/img/faces/11-image.jpg"
-        },
-        {
-            id: "12",
-            email: "rachel.howell@reqres.in",
-            first_name: "Rachel",
-            last_name: "Howell",
-            avatar: "https://reqres.in/img/faces/12-image.jpg"
-        }
-    ]}
-        
-        
-        />
-       
+
+    <View style={{ flex: 1, padding: 24 }}>
+      {isLoading ? <Text>Loading...</Text> : 
+      ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
+          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{data.title}</Text>
+          <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}></Text>
+          <FlatList
+            data={data.data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <Text>{item.id + '. ' + item.email + item.first_name + item.last_name + item.avatar}</Text>
+            )}
+          />
+        </View>
+      )}
     </View>
-  )
-}
-
-
-
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor:'white',
-    flex:1,
-  },
-  img:{
-    position:'absolute',
-    height:250,
-    width:360,
-  },
-  button:{
-    marginTop:50,
-    backgroundColor:'white',
-    height:60,
-    width:280,
-    borderRadius:10,
-    marginTop:220,
-    marginLeft:40,
-    backgroundColor:'white',
-    shadowRadius:4.65,
-    shadowColor:'#000',
-    shadowOpacity:0.29,
-    shadowOffset:{
-      width:0,
-      height:3,
-    },
-    elevation:7,
-  },
-  icon:{
-    position:'absolute',
-    width:25,
-    height:25,
-    marginLeft:20,
-    marginTop:18,
-    color:'black'
-  },
-  text1:{
-    position:'absolute',
-    marginLeft:50,
-    marginTop:5,
-    color:'black'
-  },
-  text2:{
-    marginLeft:30,
-    marginTop:20,
-    marginBottom:30,
-    fontSize:24,
-    fontFamily:'poppins',
-    fontWeight:'bold',
-    color:'black'
-  },
-  item:{
-    marginLeft:95,
-    marginTop:20,
-    fontSize:16,
-    fontFamily:'roboto',
-    color:'black'
-  },
-  harga:{
-    marginLeft:95,
-    marginBottom:30,
-    fontSize:14,
-    fontFamily:'Roboto',
-    color:'grey'
-  },
-  img1:{
-    position:'absolute',
-    marginLeft:30,
-    marginTop:15,
-    height:50,
-    width:50,
-  },
-  imgsettings:{
-    position:'absolute',
-    marginLeft:270,
-    marginTop:650,
-    height:50,
-    width:50,
-  },
-})
-
+  );
+};
